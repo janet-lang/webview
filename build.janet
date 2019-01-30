@@ -14,8 +14,8 @@
   (string/replace "\n" "" output))
 
 (def more-flags (case (os/which)
-  # The windows flags are for mingw, will need to be changed for cl.exe/link.exe
-  :windows "-lole32 -lcomctl32 -loleaut32 -luuid -mwindows"
+  # :windows "-lole32 -lcomctl32 -loleaut32 -luuid -mwindows" # flags are for mingw
+  :windows ""
   :macos "-framework WebKit"
   (shell `pkg-config --cflags --libs gtk+-3.0 webkit2gtk-4.0`)))
 
