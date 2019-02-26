@@ -1,6 +1,11 @@
 #define WEBVIEW_IMPLEMENTATION
 #include "webview.h"
-#include <janet/janet.h>
+#include "janet.h"
+
+#if defined(JANET_WINDOWS)
+#pragma comment( lib, "gdi32" )
+#pragma comment( lib, "advapi32" )
+#endif
 
 JanetAbstractType WV = {
     "webview/view",
