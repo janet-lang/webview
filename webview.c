@@ -5,6 +5,10 @@
 JanetAbstractType WV = {
     "webview/view",
     NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
     NULL
 };
 
