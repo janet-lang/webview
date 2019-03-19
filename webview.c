@@ -14,6 +14,7 @@ JanetAbstractType WV = {
     NULL,
     NULL,
     NULL,
+    NULL,
     NULL
 };
 
