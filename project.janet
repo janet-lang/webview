@@ -5,6 +5,14 @@
   :url "https://github.com/janet-lang/webview"
   :repo "git+https://github.com/janet-lang/webview.git")
 
+(defn shell
+  "Helper for using pkg-config"
+  [str]
+  (def f (file/popen str))
+  (def output (file/read f :all))
+  (file/close f)
+  (string/replace "\n" "" output))
+
 (def webview-def (case (os/which)
   :windows "WEBVIEW_WINAPI"
   :macos "WEBVIEW_COCOA"
@@ -18,6 +26,6 @@
 
 (declare-native
     :name "webview"
-    :cflags (string cook/CFLAGS " " more-flags)
+    :cflags (string CFLAGS " " more-flags)
     :defines {webview-def true}
     :source @["webview.c"])
