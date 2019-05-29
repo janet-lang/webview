@@ -14,7 +14,7 @@ Use the build.janet script to build the file `webview.so` on macos and linux, an
 on windows.
 
 ```
-janet build
+jpm build
 ```
 
 ## Testing
@@ -22,7 +22,7 @@ janet build
 Run a sample application that opens Hacker News with
 
 ```
-janet test
+jpm test
 ```
 
 ## API
