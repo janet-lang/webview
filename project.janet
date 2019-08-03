@@ -18,14 +18,24 @@
   :macos "WEBVIEW_COCOA"
   "WEBVIEW_GTK"))
 
+(defn parts
+  "Split on whitespace."
+  [str]
+  (peg/match
+    '{:ws (set " \t\n\r\0")
+      :non-ws '(some (if-not :ws 1))
+      :main (any (* (any :ws) :non-ws))}
+    str))
+
 (def more-flags (case (os/which)
   # :windows "-lole32 -lcomctl32 -loleaut32 -luuid -mwindows" # flags are for mingw
-  :windows ""
-  :macos "-framework WebKit"
-  (shell `pkg-config --cflags --libs gtk+-3.0 webkit2gtk-4.0`)))
+  :windows []
+  :macos ["-framework" "WebKit"]
+  (parts
+    (shell `pkg-config --cflags --libs gtk+-3.0 webkit2gtk-4.0`))))
 
 (declare-native
     :name "webview"
-    :cflags (string CFLAGS " " more-flags)
+    :cflags [;default-cflags ;more-flags]
     :defines {webview-def true}
     :source @["webview.c"])
