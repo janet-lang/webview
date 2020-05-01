@@ -27,15 +27,23 @@
       :main (any (* (any :ws) :non-ws))}
     str))
 
-(def more-flags (case (os/which)
+(def more-cflags (case (os/which)
+  # :windows "-lole32 -lcomctl32 -loleaut32 -luuid -mwindows" # flags are for mingw
+  :windows []
+  :macos []
+  (parts
+    (shell `pkg-config --cflags gtk+-3.0 webkit2gtk-4.0`))))
+
+(def more-lflags (case (os/which)
   # :windows "-lole32 -lcomctl32 -loleaut32 -luuid -mwindows" # flags are for mingw
   :windows []
   :macos ["-framework" "WebKit"]
   (parts
-    (shell `pkg-config --cflags --libs gtk+-3.0 webkit2gtk-4.0`))))
+    (shell `pkg-config --libs gtk+-3.0 webkit2gtk-4.0`))))
 
 (declare-native
     :name "webview"
-    :cflags [;default-cflags ;more-flags]
+    :cflags [;default-cflags ;more-cflags]
+    :lflags [;default-lflags ;more-lflags]
     :defines {webview-def true}
     :source @["webview.c"])
