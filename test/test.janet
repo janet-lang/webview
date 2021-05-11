@@ -1,6 +1,6 @@
 # A simple test application
 
-(import build/webview :as webview)
+(import ../build/webview :as webview)
 
 (def wv (webview/init
                       :title "Hacker News"
